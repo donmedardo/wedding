@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8" />
   <title>Galería de Fotos y Videos</title>
@@ -10,12 +11,12 @@
 
     // Reemplaza esto con tu configuración de Firebase
     const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_DOMINIO.firebaseapp.com",
-      projectId: "TU_PROJECT_ID",
-      storageBucket: "TU_BUCKET.appspot.com",
-      messagingSenderId: "TU_SENDER_ID",
-      appId: "TU_APP_ID"
+      apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
+      authDomain: "wedding-photos-31651.firebaseapp.com",
+      projectId: "wedding-photos-31651",
+      storageBucket: "wedding-photos-31651.firebasestorage.app",
+      messagingSenderId: "723958464122",
+      appId: "1:723958464122:web:a2e4e284ef073e49bd45c3"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -82,26 +83,33 @@
       background: #f5f5f5;
       padding: 20px;
     }
+
     h1 {
       color: #333;
     }
+
     #gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 20px;
     }
+
     input[type="file"] {
       margin: 20px 0;
     }
-    video, img {
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    video,
+    img {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
+
 <body>
   <h1>Subir Fotos y Videos</h1>
   <input type="file" id="file-input" accept="image/*,video/*" />
   <div id="gallery">Cargando galería...</div>
 </body>
+
 </html>
