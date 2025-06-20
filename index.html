@@ -1,72 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Galería Evento UploadThing</title>
-  <script src="https://unpkg.com/uploadthing@5.1.0/dist/uploadthing.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Germán & Alicia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase SDKs -->
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
   <style>
-    /* mismo estilo que antes */
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #fff;
+      color: #000;
+    }
+
+    header {
+      background: #000;
+      color: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .upload-section {
+      border: 2px dashed #000;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      border: 1px solid #000;
+      background: #fff;
+      color: #000;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img,
+    .gallery video {
+      width: 100%;
+      border: 2px solid #000;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      margin: 40px 0;
+    }
   </style>
 </head>
+
 <body>
 
   <header>
-    <h1>Sube tus recuerdos con UploadThing</h1>
+    <h1>Germán & Alicia</h1>
+    <p style="padding: 40px;">"Este día fue mágico gracias a cada uno de ustedes. Queremos guardar cada risa, cada
+      abrazo y cada instante. Si capturaste algún momento especial en fotos o videos, compártelo con nosotros. En el
+      futuro, será hermoso revivir este gran día y decir: ¡gracias por ser parte de nuestra historia!"</p>
+
+
   </header>
 
   <div class="container">
-    <input type="file" id="fileInput" accept="image/*,video/*" />
-    <button onclick="uploadFile()">Subir</button>
+    <div class="upload-section">
+      <h2>📤 Subir archivo</h2>
+      <input type="file" id="fileInput" accept="image/*,video/*">
+      <br>
+      <button onclick="uploadFile()">Subir</button>
+    </div>
 
-    <div id="gallery" class="gallery"><p>Cargando galería...</p></div>
+    <h2>🖼️ Galería de Archivos</h2>
+    <div class="gallery" id="gallery">
+      <p>Cargando archivos...</p>
+    </div>
   </div>
 
+  <footer>
+    Gracias por compartir tus recuerdos con nosotros 💍
+  </footer>
+
   <script>
-    const uploadedFiles = [];
-    const endpoint = "videoAndImage"; // Cambia por el nombre de tu endpoint
+    // TODO: Agrega tu configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDo_j2tSgePaM9sq8LKRHi_nnWi-WuMEEc",
+      authDomain: "wedding-f6b6d.firebaseapp.com",
+      projectId: "wedding-f6b6d",
+      storageBucket: "wedding-f6b6d.appspot.com",
+      messagingSenderId: "809404811563",
+      appId: "1:809404811563:web:8f253dc0b609daad8d1d6e",
+      measurementId: "G-BDP622P7PT"
+    };
 
-    async function uploadFile() {
-      const input = document.getElementById("fileInput");
-      const file = input.files[0];
-      if (!file) return alert("Selecciona un archivo");
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
 
-      try {
-        // Si usas autenticación, añade headers o token aquí
-        const res = await uploadthing.upload({
-          files: [file],
-          endpoint: endpoint,
-        });
+    // SUBIR ARCHIVO
+    function uploadFile() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) return alert("Selecciona un archivo primero");
 
-        const url = res[0]?.url;
-        if (url) {
-          uploadedFiles.push(url);
-          renderGallery();
-        } else {
-          alert("Error al subir el archivo");
-        }
-      } catch (err) {
+      const timestamp = Date.now();
+      const fileRef = storage.ref().child(`event-uploads/${timestamp}-${file.name}`);
+      fileRef.put(file).then(() => {
+        alert("Archivo subido con éxito 🎉");
+        loadGallery(); // Recargar galería
+      }).catch(err => {
         console.error(err);
-        alert("Error al subir el archivo");
-      }
-    }
-
-    function renderGallery() {
-      const gallery = document.getElementById("gallery");
-      gallery.innerHTML = "";
-
-      uploadedFiles.forEach((url) => {
-        if (url.match(/\.(jpg|jpeg|png|gif)$/i)) {
-          const img = document.createElement("img");
-          img.src = url;
-          gallery.appendChild(img);
-        } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
-          const video = document.createElement("video");
-          video.src = url;
-          video.controls = true;
-          gallery.appendChild(video);
-        }
+        alert("Error al subir archivo");
       });
     }
+
+    // CARGAR GALERÍA
+    function loadGallery() {
+      const gallery = document.getElementById("gallery");
+      gallery.innerHTML = "<p>Cargando archivos...</p>";
+
+      const folderRef = storage.ref().child("event-uploads");
+      folderRef.listAll().then((res) => {
+        if (res.items.length === 0) {
+          gallery.innerHTML = "<p>No hay archivos aún. Sé el primero en subir uno 📷</p>";
+          return;
+        }
+
+        gallery.innerHTML = "";
+        res.items.forEach((itemRef) => {
+          itemRef.getDownloadURL().then((url) => {
+            if (url.match(/\.(jpg|jpeg|png|gif)$/i)) {
+              const img = document.createElement("img");
+              img.src = url;
+              gallery.appendChild(img);
+            } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
+              const video = document.createElement("video");
+              video.src = url;
+              video.controls = true;
+              gallery.appendChild(video);
+            }
+          });
+        });
+      }).catch((error) => {
+        console.error("Error al cargar galería:", error);
+        gallery.innerHTML = "<p>Error al cargar archivos</p>";
+      });
+    }
+
+    // Inicializar la galería al cargar la página
+    window.onload = loadGallery;
   </script>
+
 </body>
+
 </html>
