@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sube tus Fotos del Evento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input, textarea {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #888;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📸 Sube tus Fotos o Videos</h1>
+    <p>¡Gracias por venir! Comparte tus recuerdos aquí.</p>
+
+    <form action="https://formspree.io/f/tu_codigo" method="POST" enctype="multipart/form-data">
+      <input type="text" name="nombre" placeholder="Tu nombre (opcional)">
+      <input type="file" name="archivo" accept="image/*,video/*" required>
+      <textarea name="mensaje" placeholder="Mensaje o descripción (opcional)"></textarea>
+      <button type="submit">Enviar archivo</button>
+    </form>
+
+    <div class="footer">
+      Tus archivos serán recibidos por los organizadores. 📂
+    </div>
+  </div>
+
+</body>
+</html>
