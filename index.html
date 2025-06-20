@@ -1,115 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Germán & Alicia</title>
-  <script src="https://unpkg.com/uploadthing@5/dist/uploadthing.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Boda de Ana y Luis - Recuerdos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background: linear-gradient(to bottom, #fffafc, #fdf2f8);
-      color: #333;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #fff;
+      color: #000;
     }
 
     header {
-      background-color: #ffe3ec;
-      padding: 40px 20px;
+      background: #000;
+      color: #fff;
+      padding: 40px;
       text-align: center;
-      border-bottom: 2px solid #ffc5d9;
     }
 
-    header h1 {
-      font-size: 2.5em;
+    h1 {
       margin: 0;
-      color: #c71585;
-    }
-
-    header p {
-      font-size: 1.2em;
-      margin-top: 10px;
-      color: #6b4e55;
+      font-size: 2.5em;
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 16px;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .upload-section {
+      border: 2px dashed #000;
       padding: 30px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
       text-align: center;
+      margin-bottom: 40px;
     }
 
-    .upload-box {
-      margin-top: 20px;
-      border: 2px dashed #ffc0cb;
-      padding: 30px;
-      border-radius: 12px;
-      background: #fff5f8;
+    input[type="file"] {
+      padding: 10px;
+      border: 1px solid #000;
+      background: #fff;
+      color: #000;
     }
 
-    .upload-box p {
-      font-size: 1.1em;
-      color: #555;
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
     }
 
-    .footer {
-      margin-top: 40px;
+    button:hover {
+      background: #333;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img,
+    .gallery video {
+      width: 100%;
+      border: 2px solid #000;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    footer {
       text-align: center;
       font-size: 0.9em;
-      color: #999;
-    }
-
-    .button {
-      background-color: #ff69b4;
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .button:hover {
-      background-color: #e055a2;
+      color: #777;
+      margin: 40px 0;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Germán & Alicia</h1>
-    <p>¡Comparte tus fotos y videos con nosotros!</p>
+    <h1>Recuerdos de la Boda de Ana y Luis</h1>
+    <p>Sube tus fotos y videos del gran día</p>
   </header>
 
   <div class="container">
-    <h2>📸 Tus recuerdos son especiales</h2>
-    <p>Sube aquí tus mejores momentos del gran día ❤️</p>
+    <div class="upload-section">
+      <h2>📤 Subir archivo</h2>
+      <input type="file" id="fileInput" accept="image/*,video/*">
+      <br>
+      <button onclick="uploadFile()">Subir</button>
+    </div>
 
-    <div class="upload-box">
-      <p>Arrastra y suelta tus archivos aquí o usa el botón</p>
-      <div id="uploadthing-widget"></div>
+    <h2>🖼️ Galería de Archivos</h2>
+    <div class="gallery" id="gallery">
+      <p>Cargando archivos...</p>
     </div>
   </div>
 
-  <div class="footer">
-    Gracias por formar parte de este momento tan especial 💍
-  </div>
+  <footer>
+    Gracias por compartir tus recuerdos con nosotros 💍
+  </footer>
 
   <script>
-    // Reemplaza 'yourUploaderSlug' con tu uploader de UploadThing
-    uploadthing.createWidget({
-      element: document.getElementById("uploadthing-widget"),
-      uploadthingUrl: "https://uploadthing.com/widgets/yourUploaderSlug", // <-- REEMPLAZAR
-      onUploadComplete: (res) => {
-        alert("¡Gracias! Tus archivos fueron subidos 🎉");
-        console.log(res);
-      },
-    });
+    // TODO: Agrega tu configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_PROJECT.firebaseapp.com",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_PROJECT.appspot.com",
+      messagingSenderId: "TU_MESSAGING_ID",
+      appId: "TU_APP_ID"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // SUBIR ARCHIVO
+    function uploadFile() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) return alert("Selecciona un archivo primero");
+
+      const timestamp = Date.now();
+      const fileRef = storage.ref().child(`event-uploads/${timestamp}-${file.name}`);
+      fileRef.put(file).then(() => {
+        alert("Archivo subido con éxito 🎉");
+        loadGallery(); // Recargar galería
+      }).catch(err => {
+        console.error(err);
+        alert("Error al subir archivo");
+      });
+    }
+
+    // CARGAR GALERÍA
+    function loadGallery() {
+      const gallery = document.getElementById("gallery");
+      gallery.innerHTML = "<p>Cargando archivos...</p>";
+
+      const folderRef = storage.ref().child("event-uploads");
+      folderRef.listAll().then((res) => {
+        if (res.items.length === 0) {
+          gallery.innerHTML = "<p>No hay archivos aún. Sé el primero en subir uno 📷</p>";
+          return;
+        }
+
+        gallery.innerHTML = "";
+        res.items.forEach((itemRef) => {
+          itemRef.getDownloadURL().then((url) => {
+            if (url.match(/\.(jpg|jpeg|png|gif)$/i)) {
+              const img = document.createElement("img");
+              img.src = url;
+              gallery.appendChild(img);
+            } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
+              const video = document.createElement("video");
+              video.src = url;
+              video.controls = true;
+              gallery.appendChild(video);
+            }
+          });
+        });
+      }).catch((error) => {
+        console.error("Error al cargar galería:", error);
+        gallery.innerHTML = "<p>Error al cargar archivos</p>";
+      });
+    }
+
+    // Inicializar la galería al cargar la página
+    window.onload = loadGallery;
   </script>
 
 </body>
