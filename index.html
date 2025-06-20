@@ -48,3 +48,69 @@
       border: 2px dashed #ffc0cb;
       padding: 30px;
       border-radius: 12px;
+      background: #fff5f8;
+    }
+
+    .upload-box p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #999;
+    }
+
+    .button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background-color: #e055a2;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boda de Ana y Luis</h1>
+    <p>¡Comparte tus fotos y videos con nosotros!</p>
+  </header>
+
+  <div class="container">
+    <h2>📸 Tus recuerdos son especiales</h2>
+    <p>Sube aquí tus mejores momentos del gran día ❤️</p>
+
+    <div class="upload-box">
+      <p>Arrastra y suelta tus archivos aquí o usa el botón</p>
+      <div id="uploadthing-widget"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Gracias por formar parte de este momento tan especial 💍
+  </div>
+
+  <script>
+    // Reemplaza 'yourUploaderSlug' con tu uploader de UploadThing
+    uploadthing.createWidget({
+      element: document.getElementById("uploadthing-widget"),
+      uploadthingUrl: "https://uploadthing.com/widgets/yourUploaderSlug", // <-- REEMPLAZAR
+      onUploadComplete: (res) => {
+        alert("¡Gracias! Tus archivos fueron subidos 🎉");
+        console.log(res);
+      },
+    });
+  </script>
+
+</body>
+</html>
