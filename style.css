@@ -11,6 +11,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url(https://cdn0.bodas.net/website/fotos/templates/176_internal_overlay.png?v=71251ce6174fdac02a39cfcefd84f33a);
+    background-repeat: no-repeat;
 }
 
 p {
