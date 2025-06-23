@@ -18,4 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(err => {
       console.error('Error al cargar navbar:', err);
     });
+
+    const btn = document.getElementById("menu-button");
+    const menu = document.getElementById("nav-menu");
+
+    btn.addEventListener("click", function () {
+      menu.classList.toggle("active");
+    });
 });
