@@ -138,13 +138,13 @@ section.active {
     display: block;
 }
 
+#file-input {
+    display: none;
+    /* Oculta el input */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    #file-input {
-        display: none;
-        /* Oculta el input */
-    }
-
     .menu {
         display: none;
         flex-direction: column;
