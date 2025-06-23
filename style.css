@@ -17,7 +17,7 @@ body {
     /* Puedes ajustar: center, top, left, etc. */
     background-size: contain;
     /* Ajusta el tamaño al viewport */
-    background-attachment: fixed;
+    
 }
 
 p {
@@ -72,8 +72,6 @@ input[type="file"] {
 .file-label:hover {
     background-color: #b8a48a;
 }
-
-
 
 video,
 img {
