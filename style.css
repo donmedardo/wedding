@@ -15,7 +15,7 @@ body {
     background-repeat: no-repeat;
     background-position: center top;
     /* Puedes ajustar: center, top, left, etc. */
-    background-size: auto;
+    background-size: contain;
     /* Ajusta el tamaño al viewport */
     background-attachment: fixed;
 }
