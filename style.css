@@ -73,10 +73,7 @@ input[type="file"] {
     background-color: #b8a48a;
 }
 
-#file-input {
-    display: none;
-    /* Oculta el input */
-}
+
 
 video,
 img {
@@ -143,6 +140,11 @@ section.active {
 
 /* Responsive */
 @media (max-width: 768px) {
+    #file-input {
+        display: none;
+        /* Oculta el input */
+    }
+
     .menu {
         display: none;
         flex-direction: column;
