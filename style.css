@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&display=swap');
+
+body {
+    font-family: 'cursive', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #faf9f6, #f0e6d2, #c8b38e);
+    color: #5b4b3a;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    font-family: 'cursive', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    font-family: "Mea Culpa", cursive;
+    font-weight: 700;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(184, 157, 117, 0.6);
+    color: #6d5a3b;
+}
+
+#gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+input[type="file"] {
+    background: #fff9f0;
+    border: 2px solid #d1bfa7;
+    border-radius: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #6a573f;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(184, 157, 117, 0.25);
+    margin-bottom: 30px;
+    max-width: 320px;
+    width: 100%;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #d1bfa7;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(140, 114, 78, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #b8a48a;
+}
+
+#file-input {
+    display: none;
+    /* Oculta el input */
+}
+
+video,
+img {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- NAVBAR --- */
+nav {
+    background: linear-gradient(to right, #ede6dc, #d2bba4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.menu {
+    display: flex;
+    gap: 16px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #4b3f2f;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #c8b08f;
+}
+
+/* Botón hamburguesa */
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #4b3f2f;
+}
+
+/* --- SECCIONES --- */
+section {
+    display: none;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+section.active {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #ede6dc;
+        margin-top: 10px;
+        padding: 10px 0;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+main {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: auto;
+}
