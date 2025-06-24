@@ -7,21 +7,20 @@ body {
     margin: 0;
     padding: 40px 20px;
     text-align: center;
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: normal;
     background-image: url(https://cdn0.bodas.net/website/fotos/templates/176_internal_overlay.png?v=71251ce6174fdac02a39cfcefd84f33a);
     background-repeat: no-repeat;
     background-position: center top;
-    /* Puedes ajustar: center, top, left, etc. */
     background-size: contain;
-    /* Ajusta el tamaño al viewport */
-
+    flex-direction: column;
+    overflow: visible;
 }
 
 p {
     font-family: 'cursive', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8rem;
 }
 
 h1 {
@@ -79,49 +78,61 @@ img {
 }
 
 /* --- NAVBAR --- */
-nav {
-    background: linear-gradient(to right, #ede6dc, #d2bba4);
-    display: flex;
-    flex-wrap: wrap;
+.navbar {
+    position: sticky;
+    background: linear-gradient(to right, rgba(255, 250, 240, 0.85), rgba(230, 214, 190, 0.85));
+    backdrop-filter: blur(8px);
+    /* da un efecto elegante de vidrio */
+    align-self: flex-start;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    top: 0;
+    width: 100%;
+    display: block;
+    z-index: 1000;
+    padding: 0.6rem 1rem;
+}
+
+.navbar-container {
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: auto;
 }
 
 .logo {
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #5b4b3a;
+    font-family: 'Georgia', serif;
 }
 
-.menu {
-    display: flex;
-    gap: 16px;
+/* --- MENÚ DESKTOP --- */
+.nav-menu {
+    gap: 1.5rem;
 }
 
-.menu a {
+.nav-menu a {
     text-decoration: none;
-    color: #4b3f2f;
-    padding: 8px 14px;
-    border-radius: 8px;
-    transition: background 0.3s ease;
+    color: #4a3d2f;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.menu a:hover {
-    background-color: #c8b08f;
+.nav-menu a:hover {
+    background-color: #d1bfa7;
+    color: #fff;
 }
 
-/* Botón hamburguesa */
+/* --- HAMBURGUER --- */
 .hamburger {
     display: none;
     font-size: 1.8rem;
-    cursor: pointer;
     background: none;
     border: none;
-    color: #4b3f2f;
+    color: #4a3d2f;
+    cursor: pointer;
 }
 
 /* --- SECCIONES --- */
@@ -143,16 +154,18 @@ section.active {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .menu {
+    .nav-menu {
         display: none;
         flex-direction: column;
+        gap: 10px;
         width: 100%;
-        background-color: #ede6dc;
-        margin-top: 10px;
+        background-color: #f8f1e8;
+        margin-top: 12px;
         padding: 10px 0;
+        border-radius: 8px;
     }
 
-    .menu.active {
+    .nav-menu.active {
         display: flex;
     }
 
@@ -167,4 +180,33 @@ main {
     margin: auto;
     width: 100%;
     box-sizing: border-box;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* ocupa pantalla completa */
+    overflow: hidden;
+}
+
+#bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+body,
+html {
+    overflow: visible;
 }
