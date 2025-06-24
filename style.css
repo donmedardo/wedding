@@ -5,7 +5,6 @@ body {
     background: linear-gradient(135deg, #faf9f6, #f0e6d2, #c8b38e);
     color: #5b4b3a;
     margin: 0;
-    padding: 40px 20px;
     text-align: center;
     min-height: 50vh;
     display: flex;
@@ -16,6 +15,7 @@ body {
     background-size: contain;
     flex-direction: column;
     overflow: visible;
+    padding: 30px 20px;
 }
 
 p {
@@ -109,6 +109,8 @@ img {
 /* --- MENÚ DESKTOP --- */
 .nav-menu {
     gap: 1.5rem;
+    flex-direction: row;
+
 }
 
 .nav-menu a {
@@ -138,7 +140,6 @@ img {
 /* --- SECCIONES --- */
 section {
     display: none;
-    padding: 40px 20px;
     max-width: 900px;
     margin: auto;
 }
@@ -172,10 +173,11 @@ section.active {
     .hamburger {
         display: block;
     }
+
 }
 
 main {
-    max-width: 800px;
+    max-width: 768px;
     margin: auto;
     width: 100%;
     box-sizing: border-box;
