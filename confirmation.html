@@ -20,7 +20,7 @@
     <script type="module">
         // Firebase SDK imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
         // Configuración de tu proyecto Firebase
         const firebaseConfig = {
@@ -68,6 +68,17 @@
             document.getElementById("info").style.display = "none";
             document.getElementById("confirmarBtn").style.display = "block";
             alert("Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.");
+            const invitados = [
+                { name: "RAMIRO", last_name: "SIMBA", confirmation: false, number_guest: 3 },
+                { name: "GUIDO", last_name: "SIMBA", confirmation: false, number_guest: 4 },
+                { name: "KARINA", last_name: "SIMBA", confirmation: false, number_guest: 5 },
+                { name: "RODOLFO", last_name: "CONSTANTE", confirmation: false, number_guest: 2 },
+            ];
+
+            /*invitados.forEach(async (invitado) => {
+                await addDoc(collection(db, "guest"), invitado);
+                console.log(`Insertado: ${invitado.name} ${invitado.last_name}`);
+            });*/
         };
 
         // ✅ Función para confirmar y mostrar info
@@ -85,16 +96,21 @@
 
             alert("¡Confirmación registrada!");
         };
+
     </script>
 </head>
 
 <body>
-    <h1>Confirmar Asistencia</h1>
-    <input class="file-label" type="text" id="nombre" placeholder="Nombre"><br>
-    <input class="file-label" type="text" id="apellido" placeholder="Apellido"><br>
-    <button class="file-label" onclick="buscarInvitado()">Buscar</button>
-    <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
-    <pre id="info"></pre>
+    <div id="navbar-container"></div>
+    <main>
+        <h1>Confirmar Asistencia</h1>
+        <input class="file-label" type="text" id="nombre" placeholder="Nombre"><br>
+        <input class="file-label" type="text" id="apellido" placeholder="Apellido"><br>
+        <button class="file-label" onclick="buscarInvitado()">Buscar</button>
+        <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
+        <p id="info"></p>
+    </main>
+    <script src="navbar.js"></script>
 </body>
 
 </html>
