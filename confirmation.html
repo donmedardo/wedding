@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inicio</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        #info {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #confirmarBtn {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+    <script type="module">
+        // Firebase SDK imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+        // Configuración de tu proyecto Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
+            authDomain: "wedding-photos-31651.firebaseapp.com",
+            projectId: "wedding-photos-31651",
+            storageBucket: "wedding-photos-31651.firebasestorage.app",
+            messagingSenderId: "723958464122",
+            appId: "1:723958464122:web:a2e4e284ef073e49bd45c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let docEncontrado = null; // Guardamos el documento si lo encontramos
+
+        // 🔍 Función para buscar invitado por nombre y apellido
+        window.buscarInvitado = async function () {
+            const nombre = document.getElementById("nombre").value.trim();
+            const apellido = document.getElementById("apellido").value.trim();
+
+            if (!nombre || !apellido) {
+                alert("Por favor ingresa nombre y apellido.");
+                return;
+            }
+
+            const q = query(collection(db, "guest"),
+                where("name", "==", nombre.toUpperCase()),
+                where("last_name", "==", apellido.toUpperCase()));
+
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                alert("Invitado no encontrado.");
+                docEncontrado = null;
+                document.getElementById("info").style.display = "none";
+                document.getElementById("confirmarBtn").style.display = "none";
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                docEncontrado = { id: docSnap.id, data: docSnap.data() };
+            });
+
+            document.getElementById("info").style.display = "none";
+            document.getElementById("confirmarBtn").style.display = "block";
+            alert("Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.");
+        };
+
+        // ✅ Función para confirmar y mostrar info
+        window.confirmarInvitado = async function () {
+            if (!docEncontrado) {
+                alert("Primero busca un invitado.");
+                return;
+            }
+
+            await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
+
+            const info = document.getElementById("info");
+            info.innerText = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nNúmero de invitados: ${docEncontrado.data.number_guest}`;
+            info.style.display = "block";
+
+            alert("¡Confirmación registrada!");
+        };
+    </script>
+</head>
+
+<body>
+    <h1>Confirmar Asistencia</h1>
+    <input class="file-label" type="text" id="nombre" placeholder="Nombre"><br>
+    <input class="file-label" type="text" id="apellido" placeholder="Apellido"><br>
+    <button class="file-label" onclick="buscarInvitado()">Buscar</button>
+    <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
+    <pre id="info"></pre>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inicio</title>
+  <title>Confirmacion</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -17,16 +17,21 @@
         Tu navegador no soporta video HTML5.
       </video>
     </div>
+    <h1>Faltan</h1>
+    <div id="countdown">
+      <p><span id="days">0</span> Dias
+        <span id="hours">00</span> horas
+        <span id="minutes">00</span> minutos
+        <span id="seconds">00</span> segundos
+      </p>
+    </div>
+    <script src="navbar.js"></script>
+    <script src="js/clock.js"></script>
+
+    <label onclick="window.location.href='confirmation.html'" class="file-label">Confirma tu asistencia</label>
+
   </main>
-  <h1>Faltan</h1>
-  <div id="countdown">
-    <p><span id="days">0</span> Dias 
-    <span id="hours">00</span> horas
-    <span id="minutes">00</span> minutos
-    <span id="seconds">00</span> segundos</p>
-  </div>
-  <script src="navbar.js"></script>
-  <script src="js/clock.js"></script>
+
 </body>
 
 </html>
