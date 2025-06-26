@@ -66,13 +66,13 @@
             });
 
             document.getElementById("info").style.display = "none";
-            document.getElementById("confirmarBtn").style.display = "block";
+            document.getElementById("confirmarBtn").style.display = "inline-block";
             alert("Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.");
             const invitados = [
-                { name: "RAMIRO", last_name: "SIMBA", confirmation: false, number_guest: 3 },
+                /*{ name: "RAMIRO", last_name: "SIMBA", confirmation: false, number_guest: 3 },
                 { name: "GUIDO", last_name: "SIMBA", confirmation: false, number_guest: 4 },
-                { name: "KARINA", last_name: "SIMBA", confirmation: false, number_guest: 5 },
-                { name: "RODOLFO", last_name: "CONSTANTE", confirmation: false, number_guest: 2 },
+                { name: "KARINA", last_name: "SIMBA", confirmation: false, number_guest: 5 },*/
+                { name: "VICENTE", last_name: "VERA", confirmation: false, number_guest: 5 },
             ];
 
             /*invitados.forEach(async (invitado) => {
@@ -91,10 +91,14 @@
             await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
 
             const info = document.getElementById("info");
-            info.innerText = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nNúmero de invitados: ${docEncontrado.data.number_guest}`;
+            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nNúmero de invitados: ${docEncontrado.data.number_guest}`;
+            info.innerText = mensaje
             info.style.display = "block";
 
             alert("¡Confirmación registrada!");
+            /*const numero = "5930992701865";
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, "_blank");*/
         };
 
     </script>
@@ -107,6 +111,7 @@
         <input class="file-label" type="text" id="nombre" placeholder="Nombre"><br>
         <input class="file-label" type="text" id="apellido" placeholder="Apellido"><br>
         <button class="file-label" onclick="buscarInvitado()">Buscar</button>
+        <!-- id="confirmarBtn" -->
         <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
         <p id="info"></p>
     </main>
