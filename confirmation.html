@@ -108,7 +108,7 @@
             await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
 
             const info = document.getElementById("info");
-            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}`;
+            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}. \nCualquier observación adicional, por favor comunícate con nosotros (Novio)0992701865 (Novia)0992904600.`;
             info.innerText = mensaje
             info.style.display = "block";
 

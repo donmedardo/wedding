@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inicio</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        #info {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #confirmarBtn {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+    <script type="module">
+        // Firebase SDK imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc , orderBy} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
+            authDomain: "wedding-photos-31651.firebaseapp.com",
+            projectId: "wedding-photos-31651",
+            storageBucket: "wedding-photos-31651.firebasestorage.app",
+            messagingSenderId: "723958464122",
+            appId: "1:723958464122:web:a2e4e284ef073e49bd45c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let docEncontrado = null; // Guardamos el documento si lo encontramos
+
+        window.cargarInvitados = async function () {
+            const lista = document.getElementById("lista-invitados");
+            lista.innerHTML = "";
+
+            const q = query(collection(db, "guest"), orderBy("confirmation", "desc"));
+
+
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                mensaje.innerText = "Invitados no encontrado.";
+                mensaje.style.color = "red";
+                docEncontrado = null;
+                document.getElementById("info").style.display = "none";
+                document.getElementById("confirmarBtn").style.display = "none";
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                docEncontrado = { id: docSnap.id, data: docSnap.data() };
+                const data = docSnap.data();
+                const li = document.createElement("li");
+                li.textContent = `${data.name} ${data.last_name} — Pases: ${data.number_guest} — Confirmado: ${data.confirmation ? "Sí" : "No"}`;
+                lista.appendChild(li);
+            });
+
+            document.getElementById("info").style.display = "none";
+            document.getElementById("confirmarBtn").style.display = "inline-block";
+            mensaje.innerText = "Eres parte importante de nuesta vida. Haz clic en 'Confirmar' para registrar asistencia.";
+            mensaje.style.color = "green";
+
+        };
+
+        window.confirmarInvitado = async function () {
+
+            if (!docEncontrado) {
+                mensaje.innerText = "¡Primero busca un invitado!";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
+
+            const info = document.getElementById("info");
+            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}`;
+            info.innerText = mensaje
+            info.style.display = "block";
+
+            mensaje.innerText = "¡Confirmación registrada!";
+            mensaje.style.color = "green";
+            /*const numero = "5930992701865";
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, "_blank");*/
+        };
+
+    </script>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+    <main>
+        <h1>Lista de invitados</h1>
+
+        <ul id="lista-invitados"></ul>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button class="file-label" onclick="cargarInvitados()">Buscar</button>
+
+        </div>
+
+        <p id="info" style="text-align: center; margin-top: 20px;"></p>
+    </main>
+    <script src="navbar.js"></script>
+</body>
+
+</html>
