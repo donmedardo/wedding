@@ -121,12 +121,17 @@
     <div id="navbar-container"></div>
     <main>
         <h1>Confirmar Asistencia</h1>
-        <input class="file-label" type="text" id="nombre" placeholder="Nombre"><br>
-        <input class="file-label" type="text" id="apellido" placeholder="Apellido"><br>
-        <button class="file-label" onclick="buscarInvitado()">Buscar</button>
-        <!-- id="confirmarBtn" -->
-        <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
-        <p id="info"></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: auto;">
+            <input class="file-label" type="text" id="nombre" placeholder="Nombre">
+            <input class="file-label" type="text" id="apellido" placeholder="Apellido">
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button class="file-label" onclick="buscarInvitado()">Buscar</button>
+            <button id="confirmarBtn" class="file-label" onclick="confirmarInvitado()">Confirmar</button>
+        </div>
+
+        <p id="info" style="text-align: center; margin-top: 20px;"></p>
     </main>
     <script src="navbar.js"></script>
 </body>

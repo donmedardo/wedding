@@ -15,18 +15,18 @@ body {
     background-size: contain;
     flex-direction: column;
     overflow: visible;
-    padding: 30px 20px;
+    padding: 30px 0px;
 }
 
 p {
     font-family: "Times New Roman", Times, serif;
-    font-size: 1.8rem;
+    font-size: 1.3rem;
 }
 
 h1 {
-    font-family: "Mea Culpa", cursive;
+    font-family: snellroundhandw01-scrip, cursive;
     font-weight: 700;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
     text-shadow: 1px 1px 4px rgba(184, 157, 117, 0.6);
     color: #6d5a3b;
@@ -57,32 +57,51 @@ input[type="file"] {
 }
 
 .file-label {
-    display: inline-block;
-    padding: 12px 20px;
-    background-color: #d1bfa7;
-    color: #fff;
-    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(140, 114, 78, 0.2);
-    transition: background-color 0.3s ease;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.file-label:focus {
+    border-color: #a07b55;
+    box-shadow: 0 0 6px rgba(160, 123, 85, 0.4);
 }
 
 .file-label:hover {
     background-color: #b8a48a;
 }
 
+button.file-label {
+    background-color: #a07b55;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+button.file-label:hover {
+    background-color: #8a6544;
+}
+
 video,
 img {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: "269";
+    height: "224";
+    object-fit: cover
 }
 
 /* --- NAVBAR --- */
 .navbar {
     position: sticky;
-    background: linear-gradient(to right, rgba(255, 250, 240, 0.85), rgba(230, 214, 190, 0.85));
     backdrop-filter: blur(8px);
-    /* da un efecto elegante de vidrio */
     align-self: flex-start;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     top: 0;
@@ -90,6 +109,10 @@ img {
     display: block;
     z-index: 1000;
     padding: 0.6rem 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    /* si deseas que esté siempre arriba */
+
 }
 
 .navbar-container {
@@ -160,7 +183,6 @@ section.active {
         flex-direction: column;
         gap: 10px;
         width: 100%;
-        background-color: #f8f1e8;
         margin-top: 12px;
         padding: 10px 0;
         border-radius: 8px;
@@ -186,7 +208,7 @@ main {
 .video-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 120vh;
     /* ocupa pantalla completa */
     overflow: hidden;
 }
