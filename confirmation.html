@@ -54,7 +54,7 @@
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
-                mensaje.innerText = "Invitado no encontrado.";
+                mensaje.innerText = "Invitado no encontrado. Intenta solo un nombre y un apellido";
                 mensaje.style.color = "red";
                 docEncontrado = null;
                 document.getElementById("info").style.display = "none";

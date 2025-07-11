@@ -20,7 +20,7 @@
     <script type="module">
         // Firebase SDK imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc , orderBy} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc, orderBy } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
@@ -35,10 +35,8 @@
         const db = getFirestore(app);
 
         let docEncontrado = null; // Guardamos el documento si lo encontramos
-
+        document.getElementById("table-guest").style.display = "none";
         window.cargarInvitados = async function () {
-            const lista = document.getElementById("lista-invitados");
-            lista.innerHTML = "";
 
             const q = query(collection(db, "guest"), orderBy("confirmation", "desc"));
 
@@ -49,17 +47,28 @@
                 mensaje.innerText = "Invitados no encontrado.";
                 mensaje.style.color = "red";
                 docEncontrado = null;
-                document.getElementById("info").style.display = "none";
-                document.getElementById("confirmarBtn").style.display = "none";
                 return;
             }
-
+            const cuerpoTabla = document.getElementById("cuerpo-tabla");
             querySnapshot.forEach((docSnap) => {
+            document.getElementById("table-guest").style.display = "inline-table";
+
+
                 docEncontrado = { id: docSnap.id, data: docSnap.data() };
                 const data = docSnap.data();
-                const li = document.createElement("li");
-                li.textContent = `${data.name} ${data.last_name} — Pases: ${data.number_guest} — Confirmado: ${data.confirmation ? "Sí" : "No"}`;
-                lista.appendChild(li);
+
+                const fila = document.createElement("tr");
+
+                fila.innerHTML = `
+                    <td>${data.name}</td>
+                    <td>${data.last_name}</td>
+                    <td>${data.number_guest}</td>
+                    <td>${data.confirmation ? "Sí" : "No"}</td>
+                    <td>${data.telef}</td>
+                `;
+
+                cuerpoTabla.appendChild(fila);
+
             });
 
             document.getElementById("info").style.display = "none";
@@ -67,28 +76,6 @@
             mensaje.innerText = "Eres parte importante de nuesta vida. Haz clic en 'Confirmar' para registrar asistencia.";
             mensaje.style.color = "green";
 
-        };
-
-        window.confirmarInvitado = async function () {
-
-            if (!docEncontrado) {
-                mensaje.innerText = "¡Primero busca un invitado!";
-                mensaje.style.color = "red";
-                return;
-            }
-
-            await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
-
-            const info = document.getElementById("info");
-            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}`;
-            info.innerText = mensaje
-            info.style.display = "block";
-
-            mensaje.innerText = "¡Confirmación registrada!";
-            mensaje.style.color = "green";
-            /*const numero = "5930992701865";
-            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, "_blank");*/
         };
 
     </script>
@@ -99,7 +86,18 @@
     <main>
         <h1>Lista de invitados</h1>
 
-        <ul id="lista-invitados"></ul>
+        <table id="table-guest">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Pases</th>
+                    <th>Confirmado</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla"></tbody>
+        </table>
 
         <div style="margin-top: 20px; text-align: center;">
             <button class="file-label" onclick="cargarInvitados()">Buscar</button>
