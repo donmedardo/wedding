@@ -127,8 +127,8 @@
     <main>
         <h1>Confirmar Asistencia</h1>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: auto;">
-            <input class="file-label" type="text" id="nombre" placeholder="Nombre">
-            <input class="file-label" type="text" id="apellido" placeholder="Apellido">
+            <input class="file-label" oninput="this.value = this.value.toUpperCase()" type="text" id="nombre" placeholder="Nombre">
+            <input class="file-label" oninput="this.value = this.value.toUpperCase()" type="text" id="apellido" placeholder="Apellido">
         </div>
 
         <p id="mensaje"></p>
