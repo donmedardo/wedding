@@ -233,3 +233,11 @@ body,
 html {
     overflow: visible;
 }
+
+.con-linea td {
+    border-bottom: 1px solid #ccc;
+}
+
+tbody td {
+    text-align: left;
+}

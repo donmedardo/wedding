@@ -59,6 +59,7 @@
                 const data = docSnap.data();
 
                 const fila = document.createElement("tr");
+                fila.classList.add("con-linea");
 
                 fila.innerHTML = `
                     <td>${data.name}</td>
@@ -66,6 +67,7 @@
                     <td>${data.number_guest}</td>
                     <td>${data.confirmation ? "Sí" : "No"}</td>
                     <td>${data.phone}</td>
+                    <td>${data.note}</td>
                 `;
 
                 cuerpoTabla.appendChild(fila);
@@ -94,6 +96,7 @@
                     <th>Pases</th>
                     <th>Confirmado</th>
                     <th>Teléfono</th>
+                    <th>Observación</th>
                 </tr>
             </thead>
             <tbody id="cuerpo-tabla"></tbody>
