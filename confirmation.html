@@ -22,7 +22,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-        // Configuración de tu proyecto Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
             authDomain: "wedding-photos-31651.firebaseapp.com",
@@ -37,7 +36,6 @@
 
         let docEncontrado = null; // Guardamos el documento si lo encontramos
 
-        // 🔍 Función para buscar invitado por nombre y apellido
         window.buscarInvitado = async function () {
             const nombre = document.getElementById("nombre").value.trim();
             const apellido = document.getElementById("apellido").value.trim();
@@ -70,7 +68,7 @@
 
             document.getElementById("info").style.display = "none";
             document.getElementById("confirmarBtn").style.display = "inline-block";
-            mensaje.innerText = "Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.";
+            mensaje.innerText = "Eres parte importante de nuesta vida. Haz clic en 'Confirmar' para registrar asistencia.";
             mensaje.style.color = "green";
 
             const invitados = [
@@ -99,7 +97,6 @@
             });*/
         };
 
-        // ✅ Función para confirmar y mostrar info
         window.confirmarInvitado = async function () {
 
             if (!docEncontrado) {
@@ -111,7 +108,7 @@
             await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
 
             const info = document.getElementById("info");
-            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nNúmero de invitados: ${docEncontrado.data.number_guest}`;
+            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}`;
             info.innerText = mensaje
             info.style.display = "block";
 
