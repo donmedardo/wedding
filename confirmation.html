@@ -41,9 +41,11 @@
         window.buscarInvitado = async function () {
             const nombre = document.getElementById("nombre").value.trim();
             const apellido = document.getElementById("apellido").value.trim();
+            const mensaje = document.getElementById("mensaje");
 
             if (!nombre || !apellido) {
-                alert("Por favor ingresa nombre y apellido.");
+                mensaje.innerText = "Por favor ingresa nombre y apellido.";
+                mensaje.style.color = "red";
                 return;
             }
 
@@ -54,7 +56,8 @@
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
-                alert("Invitado no encontrado.");
+                mensaje.innerText = "Invitado no encontrado.";
+                mensaje.style.color = "red";
                 docEncontrado = null;
                 document.getElementById("info").style.display = "none";
                 document.getElementById("confirmarBtn").style.display = "none";
@@ -67,7 +70,9 @@
 
             document.getElementById("info").style.display = "none";
             document.getElementById("confirmarBtn").style.display = "inline-block";
-            alert("Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.");
+            mensaje.innerText = "Invitado encontrado. Haz clic en 'Confirmar' para registrar asistencia.";
+            mensaje.style.color = "green";
+
             const invitados = [
                 { name: "MARCEDES", last_name: "SANCHEZ", confirmation: false, number_guest: 2 },
                 { name: "JORGE", last_name: "VINUEZA", confirmation: false, number_guest: 2 },
@@ -96,8 +101,10 @@
 
         // ✅ Función para confirmar y mostrar info
         window.confirmarInvitado = async function () {
+
             if (!docEncontrado) {
-                alert("Primero busca un invitado.");
+                mensaje.innerText = "¡Primero busca un invitado!";
+                mensaje.style.color = "red";
                 return;
             }
 
@@ -108,7 +115,8 @@
             info.innerText = mensaje
             info.style.display = "block";
 
-            alert("¡Confirmación registrada!");
+            mensaje.innerText = "¡Confirmación registrada!";
+            mensaje.style.color = "green";
             /*const numero = "5930992701865";
             const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, "_blank");*/
@@ -125,6 +133,8 @@
             <input class="file-label" type="text" id="nombre" placeholder="Nombre">
             <input class="file-label" type="text" id="apellido" placeholder="Apellido">
         </div>
+
+        <p id="mensaje"></p>
 
         <div style="margin-top: 20px; text-align: center;">
             <button class="file-label" onclick="buscarInvitado()">Buscar</button>

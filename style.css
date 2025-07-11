@@ -93,8 +93,7 @@ button.file-label:hover {
 
 video,
 img {
-    width: "269";
-    height: "224";
+    width: "50%";
     object-fit: cover
 }
 
