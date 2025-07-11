@@ -108,9 +108,12 @@
             await updateDoc(doc(db, "guest", docEncontrado.id), { confirmation: true });
 
             const info = document.getElementById("info");
-            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado: ${docEncontrado.data.number_guest}. \nCualquier observación adicional, por favor comunícate con nosotros (Novio)0992701865 (Novia)0992904600.`;
+            const pases = document.getElementById("pases");
+            const mensaje = `Invitado confirmado:\n${docEncontrado.data.name} ${docEncontrado.data.last_name}\nPases asignados por invitado:`;
             info.innerText = mensaje
             info.style.display = "block";
+            pases.innerText = `${docEncontrado.data.number_guest}`
+            pases.style.display = "block";
 
             mensaje.innerText = "¡Confirmación registrada!";
             mensaje.style.color = "green";
@@ -139,6 +142,10 @@
         </div>
 
         <p id="info" style="text-align: center; margin-top: 20px;"></p>
+        <p id="pases" style="text-align: center; margin-top: 20px; font-size: 3rem;"></p>
+        <p>Cualquier observación adicional, por favor comunícate con nosotros (Novio)0992701865 (Novia)0992904600.</p>
+
+
     </main>
     <script src="navbar.js"></script>
 </body>
