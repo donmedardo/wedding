@@ -50,9 +50,10 @@
                 return;
             }
             const cuerpoTabla = document.getElementById("cuerpo-tabla");
+            cuerpoTabla.innerHTML = "";
+
             querySnapshot.forEach((docSnap) => {
             document.getElementById("table-guest").style.display = "inline-table";
-
 
                 docEncontrado = { id: docSnap.id, data: docSnap.data() };
                 const data = docSnap.data();
@@ -64,11 +65,10 @@
                     <td>${data.last_name}</td>
                     <td>${data.number_guest}</td>
                     <td>${data.confirmation ? "Sí" : "No"}</td>
-                    <td>${data.telef}</td>
+                    <td>${data.phone}</td>
                 `;
 
                 cuerpoTabla.appendChild(fila);
-
             });
 
             document.getElementById("info").style.display = "none";
