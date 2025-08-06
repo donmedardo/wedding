@@ -17,72 +17,7 @@
             margin-top: 10px;
         }
     </style>
-    <script type="module">
-        // Firebase SDK imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, updateDoc, doc, addDoc, orderBy } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzL_aegKfE1iLVU41aQpodXg5YkChCxmo",
-            authDomain: "wedding-photos-31651.firebaseapp.com",
-            projectId: "wedding-photos-31651",
-            storageBucket: "wedding-photos-31651.firebasestorage.app",
-            messagingSenderId: "723958464122",
-            appId: "1:723958464122:web:a2e4e284ef073e49bd45c3"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let docEncontrado = null; // Guardamos el documento si lo encontramos
-        document.getElementById("table-guest").style.display = "none";
-        window.cargarInvitados = async function () {
-
-            const q = query(collection(db, "guest"), orderBy("confirmation", "desc"));
-
-
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                mensaje.innerText = "Invitados no encontrado.";
-                mensaje.style.color = "red";
-                docEncontrado = null;
-                return;
-            }
-            const cuerpoTabla = document.getElementById("cuerpo-tabla");
-            cuerpoTabla.innerHTML = "";
-
-            querySnapshot.forEach((docSnap) => {
-                document.getElementById("table-guest").style.display = "inline-table";
-
-                docEncontrado = { id: docSnap.id, data: docSnap.data() };
-                const data = docSnap.data();
-
-                const fila = document.createElement("tr");
-                fila.classList.add("con-linea");
-
-                fila.innerHTML = `
-                    <td>${data.name}</td>
-                    <td>${data.last_name}</td>
-                    <td>${data.number_guest}</td>
-                    <td>${data.confirmation ? "Sí" : "No"}</td>
-                    <td><a href="https://wa.me/${data.phone}" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" height="20">
-                        ${data.phone}</a> </td>
-                    <td>${data.note}</td>
-                `;
-
-                cuerpoTabla.appendChild(fila);
-            });
-
-            document.getElementById("info").style.display = "none";
-            document.getElementById("confirmarBtn").style.display = "inline-block";
-            mensaje.innerText = "Eres parte importante de nuesta vida. Haz clic en 'Confirmar' para registrar asistencia.";
-            mensaje.style.color = "green";
-
-        };
-
-    </script>
+    <script type="module" src="guest.js"></script>
 </head>
 
 <body>
@@ -90,12 +25,18 @@
     <main>
         <h1>Lista de invitados</h1>
 
+        <h2>numero de adultos confirmados :</h2>
+        <p id="numeroAdultos"></p>
+        <h2>numero de niños confirmados :</h2>
+        <p id="numberChilds"></p>
+
         <table id="table-guest">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Pases</th>
+                    <th>Adultos</th>
+                    <th>Niños</th>
                     <th>Confirmado</th>
                     <th>Teléfono</th>
                     <th>Observación</th>
@@ -106,7 +47,6 @@
 
         <div style="margin-top: 20px; text-align: center;">
             <button class="file-label" onclick="cargarInvitados()">Buscar</button>
-
         </div>
 
         <p id="info" style="text-align: center; margin-top: 20px;"></p>
