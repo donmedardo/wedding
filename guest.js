@@ -17,7 +17,7 @@ let docEncontrado = null; // Guardamos el documento si lo encontramos
 document.getElementById("table-guest").style.display = "none";
 window.cargarInvitados = async function () {
 
-    const q = query(collection(db, "guest"), orderBy("relationship", "desc"),  orderBy("table_id", "desc"));
+    const q = query(collection(db, "guest"), orderBy("table_id", "desc"));
 
 
     const querySnapshot = await getDocs(q);
@@ -63,6 +63,22 @@ window.cargarInvitados = async function () {
         cuerpoTabla.appendChild(fila);
     });
 
+    const items = querySnapshot.docs.map(doc => doc.data());
+
+    const resultado = new Map();
+
+    items.forEach(item => {
+        const clave = item.table_id; // Agrupar por este campo
+        const valor = item.number_guest + (item.childs ? item.childs : 0) || 0; // Sumar este campo
+
+        if (!resultado.has(clave)) {
+            resultado.set(clave, 0);
+        }
+        resultado.set(clave, resultado.get(clave) + valor);
+    });
+
+    console.log(resultado); // Map con las sumas
+
     const info = document.getElementById("numeroAdultos");
     info.innerText = numeroAdultos;
     info.style.display = "block";
@@ -72,4 +88,24 @@ window.cargarInvitados = async function () {
     numberChilds.style.display = "block";
 
 
+    mostrarEnTabla(resultado);
+}
+
+function mostrarEnTabla(map) {
+    const tbody = document.getElementById("tabla-resultados-body");
+    tbody.innerHTML = ""; // Limpiar
+
+    for (const [clave, valor] of map) {
+        const fila = document.createElement("tr");
+
+        const tdClave = document.createElement("td");
+        tdClave.textContent = clave;
+        fila.appendChild(tdClave);
+
+        const tdValor = document.createElement("td");
+        tdValor.textContent = valor;
+        fila.appendChild(tdValor);
+
+        tbody.appendChild(fila);
+    }
 };
