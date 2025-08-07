@@ -17,7 +17,7 @@ let docEncontrado = null; // Guardamos el documento si lo encontramos
 document.getElementById("table-guest").style.display = "none";
 window.cargarInvitados = async function () {
 
-    const q = query(collection(db, "guest"), orderBy("confirmation", "desc"));
+    const q = query(collection(db, "guest"), orderBy("relationship", "desc"),  orderBy("table_id", "desc"));
 
 
     const querySnapshot = await getDocs(q);
@@ -51,7 +51,9 @@ window.cargarInvitados = async function () {
                     <td><a href="https://wa.me/${data.phone}" target="_blank">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" height="20">
                         ${data.phone}</a> </td>
-                    <td>${data.note}</td>
+                    <td>${data.relationship}</td>
+                    <td>${data.table_id}</td>
+
                 `;
         if (data.confirmation) {
             numeroAdultos += data.number_guest ? data.number_guest : 0;
